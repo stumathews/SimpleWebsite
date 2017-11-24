@@ -1,0 +1,125 @@
+<!-- HTML Template -->
+
+<html>
+<head>
+	<head>
+	<!-- Pull in our CSS resources -->
+	<link rel="stylesheet" type="text/css" media="all" href="css/reset.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/text.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/960.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="css/default.css" />
+
+	<?php include_once "php/functions.php"; ?>
+	<?php include_once "php/settings.php"; ?>
+	<?php include_once "classes/WebsitePage.php"; ?>
+
+	<?php
+		
+		/* Get the Name of the page requested */
+		$PAGE = $_REQUEST['Page'];
+		$DEFAULT_PAGE='default.page';
+		$fetched_page=null;
+		/* Fetch the page, or show the default one if non specified. */
+		if(empty($PAGE))
+		{
+			$fetched_page = GetPage($DEFAULT_PAGE);
+		}
+		else
+		{	
+			$fetched_page = GetPage($PAGE);
+		}
+		/* Crack open the fetched page, extract title, content etc...  */
+		$TITLE = $fetched_page->Title;
+		$CONTENT = $fetched_page->Content;
+		/* Go A fetch 4 most recent articles... */
+		$recent_pages = ListMostRecent($root_path.'/pages');
+			/* Ensure that the main article is not included in the 3 sub articles on page...  */
+			$article1 = $recent_pages[3];
+			if( strcmp($article1->Title,$TITLE) == 0){
+				$article1 = $recent_pages[0];
+			}
+
+			$article2 = $recent_pages[2];			
+			if( strcmp($article2->Title,$TITLE) == 0){
+				$article2 = $recent_pages[0];
+			}
+			
+			$article3 = $recent_pages[1];
+			if( strcmp($article3->Title,$fetched_page->Title) == 0 ){
+				$article3 = $recent_pages[0];
+			}
+	?>
+
+	<title><?php echo $TITLE.' - '.$site_name ?></title>
+</head>
+
+
+<!-- Extract the bare essentials that this template needs to function -->
+
+
+</body>
+	<div class="container_12">
+		<div id="top" class="grid_12">
+			<h1>
+				<span class="WebsiteTitle">	<?php echo $site_name.' - '.$TITLE; ?>	</span>
+			</h1>
+			<p>
+				<span class="Slogan">
+					<?php PrintSlogan(); ?>
+				</span>
+			</p>
+		</div>
+      <div id="top_bar" class="grid_12">
+        <ul>
+        <li> <a href="?Page=about.page">About</a></li>
+        </ul>
+      </div>
+		<div id="left" class="grid_3">
+		<h3>
+			<span class="leftMenuTitle"><?php echo "Pages"; ?></span>
+		</h3>
+			<div class="LeftMenu">
+				<?php
+					 ListContents('pages');
+				?>
+			</div>
+		</div>
+		<div id="content" class="grid_9">
+		<h2>
+		 <span class="PageTitle">
+				<?php 
+						echo $TITLE;
+				?>
+		</span>
+		</h2>
+			<div class="PageText">
+				<p>
+				<?php  echo $CONTENT ?>
+				</p>
+			</div>
+		<br/>
+			<div id="one" class="grid_3 alpha">
+			<h2>
+				<span class="OneTitle"><?php echo $article1->Title; ?></span>
+			</h2>
+				<?php echo $article1->Content; ?>
+			</div>
+			<div id="two" class="grid_3">
+			<h2>
+				<span class="TwoTitle"><?php echo $article2->Title; ?></span>
+			</h2>
+				<?php echo $article2->Content; ?>
+			</div>
+			<div id="three" class="grid_3 omega">
+			<h2>
+				<span class="ThreeTitle"><?php echo $article3->Title; ?></span>
+			</h2>
+				<?php echo $article3->Content; ?>
+			</div>
+		</div>
+		<div id="footer" class="grid_12">
+			<?php PrintFooter(); ?>	
+		</div>
+	</div>
+</body>
+</html>

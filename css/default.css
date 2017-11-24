@@ -1,0 +1,57 @@
+#top
+{
+	background: #2e2e2e url(../images/calm.jpg) no-repeat right top ;
+	/*background-color: #2e2e2e;*/
+	
+	margin: 10px;
+	border-top: solid 5px grey;
+	border-bottom: solid 5px grey;
+}
+#top h1
+{
+	color: white;
+	margin-left: 20px;
+	margin-top: 30px;
+}
+#top p
+{
+	padding: 2em;
+	color: grey;
+}
+#top_bar
+{
+}
+#top_bar ul li
+{
+	display: inline;
+	margin:0px;
+}
+#top_bar ul li a:link
+{
+}
+#left
+{
+}
+
+#one
+{
+}
+#two
+{
+}
+#three
+{
+}
+#one, #two, #three h2
+{
+}
+#content p
+{
+	padding: 5px;
+}
+#footer
+{
+	background-color: #E0EEEE;
+	margin-top: 20px;
+	text-align: center;
+}
